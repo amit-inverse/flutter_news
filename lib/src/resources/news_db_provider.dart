@@ -11,8 +11,17 @@ class NewsDbProvider {
   init() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentDirectory.path, "items.db");
-    db = await openDatabase(path, version: 1, onCreate: (Database newDb, int version) {
-      
-    });
+    db = await openDatabase(
+      path,
+      version: 1,
+      onCreate: (Database newDb, int version) {
+        newDb.execute("""
+            CREATE TABLE Items
+              (
+                
+              )
+        """);
+      },
+    );
   }
 }
