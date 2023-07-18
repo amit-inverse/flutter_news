@@ -4,9 +4,15 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import '../models/item_model.dart';
+import './repository.dart';
 
-class NewsDbProvider {
+class NewsDbProvider implements Source {
   late Database db;
+  
+  // Todo - store and fetch top ids
+  Future<List<int>> fetchToIds() {
+    return null;
+  }
 
   void init() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
