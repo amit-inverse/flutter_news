@@ -8,11 +8,6 @@ import './repository.dart';
 
 class NewsDbProvider implements Source {
   late Database db;
-  
-  // Todo - store and fetch top ids
-  Future<List<int>> fetchToIds() {
-    return null;
-  }
 
   void init() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
@@ -42,7 +37,14 @@ class NewsDbProvider implements Source {
       },
     );
   }
+  
+  // Todo - store and fetch top ids
+  @override
+  Future<List<int>>? fetchTopIds() {
+    return null;
+  }
 
+  @override
   Future<ItemModel?> fetchItem(int id) async {
     final maps = await db.query(
       "Items",
