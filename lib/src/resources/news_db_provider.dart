@@ -6,7 +6,7 @@ import 'package:path/path.dart';
 import '../models/item_model.dart';
 import './repository.dart';
 
-class NewsDbProvider implements Source {
+class NewsDbProvider implements Source, Cache {
   late Database db;
 
   void init() async {
@@ -60,6 +60,7 @@ class NewsDbProvider implements Source {
     return null;
   }
 
+  @override
   Future<int> addItem(ItemModel item) {
     return db.insert("Items", item.toMapForDb());
   }
