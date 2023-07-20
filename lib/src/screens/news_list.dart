@@ -22,15 +22,15 @@ class NewsList extends StatelessWidget {
   Widget buildList(StoriesBloc bloc) {
     return StreamBuilder(
       stream: bloc.topIds,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
+      builder: (context, AsyncSnapshot<List<int>> snapshot) {
+        if (!snapshot.hasData) {
           return const Text('Waiting...');
         }
 
         return ListView.builder(
           itemCount: snapshot.data!.length,
           itemBuilder: (context, int index) {
-            return Text(snapshot.data![index] as String);
+            return Text('${snapshot.data![index]}');
           },
         );
       },
