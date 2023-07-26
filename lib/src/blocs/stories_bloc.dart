@@ -6,9 +6,13 @@ import '../resources/repository.dart';
 class StoriesBloc {
   final _repository = Repository();
   final _topIds = PublishSubject<List<int>>();
+  final _items = BehaviorSubject<int>();
 
   // Getters to Stream
   Stream<List<int>> get topIds => _topIds.stream;
+
+  // Getters to Sinks
+  Function(int) get fetchItem => _items.sink.add;
 
   fetchTopIds() async {
     final ids = await _repository.fetchToIds();
@@ -27,5 +31,6 @@ class StoriesBloc {
 
   dispose() {
     _topIds.close();
+    _items.close();
   }
 }
