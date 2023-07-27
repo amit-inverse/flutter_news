@@ -41,7 +41,7 @@ class NewsDbProvider implements Source, Cache {
       },
     );
   }
-  
+
   // Todo - store and fetch top ids
   @override
   Future<List<int>>? fetchTopIds() {
@@ -66,7 +66,11 @@ class NewsDbProvider implements Source, Cache {
 
   @override
   Future<int> addItem(ItemModel item) {
-    return db.insert("Items", item.toMapForDb());
+    return db.insert(
+      "Items",
+      item.toMapForDb(),
+      conflictAlgorithm: ConflictAlgorithm.ignore,
+    );
   }
 }
 

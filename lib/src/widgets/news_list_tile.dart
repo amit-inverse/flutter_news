@@ -6,30 +6,41 @@ import '../blocs/stories_provider.dart';
 class NewsListTile extends StatelessWidget {
   final int itemId;
 
-  const NewsListTile({super.key, required this.itemId});
+  const NewsListTile({Key? key, required this.itemId}) : super(key: key);
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     final bloc = StoriesProvider.of(context);
 
     return StreamBuilder(
       stream: bloc.items,
-      builder: ((context, AsyncSnapshot<Map<int, Future<ItemModel>>> snapshot) {
+      builder: (context, AsyncSnapshot<Map<int, Future<ItemModel?>>> snapshot) {
         if (!snapshot.hasData) {
           return const Text('Stream still loading');
         }
 
-        return FutureBuilder(
+        return FutureBuilder<ItemModel?>(
           future: snapshot.data![itemId],
-          builder: (context, AsyncSnapshot<ItemModel> itemSnapshot) {
-            if(!itemSnapshot.hasData) {
+          builder: (context, AsyncSnapshot<ItemModel?> itemSnapshot) {
+            if (!itemSnapshot.hasData) {
               return Text('Still loading item $itemId');
             }
 
-            return Text(itemSnapshot.data?.title as String);
+            return buildTile(itemSnapshot.data!);
           },
         );
-      }),
+      },
+    );
+  }
+
+  Widget buildTile(ItemModel item) {
+    return ListTile(
+      title: Text(item.title ?? ''),
+      subtitle: Text('${item.score} points'),
+      trailing: Column(children: [
+        const Icon(Icons.comment),
+        Text('${item.descendants}')
+      ],),
     );
   }
 }
