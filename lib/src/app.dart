@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import './screens/news_list.dart';
 import './blocs/stories_provider.dart';
+import './screens/news_detail.dart';
+import './screens/news_list.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -11,9 +12,11 @@ class App extends StatelessWidget {
       child: MaterialApp(
         title: 'News',
         onGenerateRoute: (RouteSettings settings) {
-          return MaterialPageRoute(builder: (context) {
-            return const NewsList();
-          },);
+          return MaterialPageRoute(
+            builder: (context) {
+              return const NewsList();
+            },
+          );
         },
       ),
     );
