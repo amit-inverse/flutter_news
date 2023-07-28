@@ -8,9 +8,13 @@ class App extends StatelessWidget {
   @override
   Widget build(context) {
     return StoriesProvider(
-      child: const MaterialApp(
+      child: MaterialApp(
         title: 'News',
-        home: NewsList(),
+        onGenerateRoute: (RouteSettings settings) {
+          return MaterialPageRoute(builder: (context) {
+            return const NewsList();
+          },);
+        },
       ),
     );
   }
