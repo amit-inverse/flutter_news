@@ -5,6 +5,11 @@ class NewsDetail extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return const Text('News Detail');
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Detail'),
+      ),
+      body: Text('News Detail'),
+    );
   }
 }
