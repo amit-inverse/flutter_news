@@ -14,11 +14,23 @@ class Comment extends StatelessWidget {
     return FutureBuilder<ItemModel?>(
       future: itemMap![itemId],
       builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
-        if(!snapshot.hasData) {
+        if (!snapshot.hasData) {
           return const Text('Still loading comment');
         }
 
-        return Text('${snapshot.data!.text}');
+        final children = <Widget>[
+          Text('${snapshot.data!.text}'),
+        ];
+        for (var kidId in snapshot.data!.kids!) {
+          children.add(Comment(
+            itemId: kidId,
+            itemMap: itemMap,
+          ));
+        }
+
+        return Column(
+          children: children,
+        );
       },
     );
   }
