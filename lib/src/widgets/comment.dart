@@ -5,8 +5,13 @@ import '../models/item_model.dart';
 class Comment extends StatelessWidget {
   final int itemId;
   final Map<int, Future<ItemModel?>>? itemMap;
+  final int depth;
 
-  const Comment({Key? key, required this.itemId, required this.itemMap})
+  const Comment(
+      {Key? key,
+      required this.itemId,
+      required this.itemMap,
+      required this.depth})
       : super(key: key);
 
   @override
@@ -24,6 +29,10 @@ class Comment extends StatelessWidget {
             title: Text('${item!.text}'),
             subtitle:
                 item.by == "" ? const Text('Deleted') : Text('${item.by}'),
+            contentPadding: EdgeInsets.only(
+              right: 16.0,
+              left: (depth + 1) * 16.0,
+            ),
           ),
           const Divider(),
         ];
@@ -31,6 +40,7 @@ class Comment extends StatelessWidget {
           children.add(Comment(
             itemId: kidId,
             itemMap: itemMap,
+            depth: depth + 1,
           ));
         }
 
