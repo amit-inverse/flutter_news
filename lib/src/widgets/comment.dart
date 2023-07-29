@@ -26,7 +26,7 @@ class Comment extends StatelessWidget {
         final item = snapshot.data;
         final children = <Widget>[
           ListTile(
-            title: Text('${item!.text}'),
+            title: buildText(item!),
             subtitle:
                 item.by == "" ? const Text('Deleted') : Text('${item.by}'),
             contentPadding: EdgeInsets.only(
@@ -49,5 +49,15 @@ class Comment extends StatelessWidget {
         );
       },
     );
+  }
+
+  Widget buildText(ItemModel item) {
+    final text = item.text!
+        .replaceAll('&#x27;', "'")
+        .replaceAll('&#x2F;', '/')
+        .replaceAll('<p>', '\n\n')
+        .replaceAll('</p>', '');
+
+    return Text(text);
   }
 }
