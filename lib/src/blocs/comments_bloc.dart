@@ -8,11 +8,11 @@ class CommentsBloc {
   final _commentsFetcher = PublishSubject<int>();
   final _commentsOutput = BehaviorSubject<Map<int, Future<ItemModel?>>>();
 
-  // Stream
+  // Getters to Streams
   Stream<Map<int, Future<ItemModel?>>> get itemWithComments =>
       _commentsOutput.stream;
 
-  // Sink
+  // Getters to Sinks
   Function(int) get fetchItemWithComments => _commentsFetcher.sink.add;
 
   CommentsBloc() {
@@ -24,7 +24,7 @@ class CommentsBloc {
   StreamTransformer<int, Map<int, Future<ItemModel?>>> _commentsTransformer() {
     return ScanStreamTransformer(
       (Map<int, Future<ItemModel?>> cache, int id, index) {
-        print(index);
+        // print(index);
         cache[id] ??= _repository.fetchItem(id);
         cache[id]!.then((ItemModel? item) {
           item?.kids?.forEach((kidId) => fetchItemWithComments(kidId));

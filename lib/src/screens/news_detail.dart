@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '../blocs/comments_provider.dart';
 import '../models/item_model.dart';
+import '../widgets/loading_container.dart';
 import '../widgets/comment.dart';
 
 class NewsDetail extends StatelessWidget {
@@ -25,7 +26,7 @@ class NewsDetail extends StatelessWidget {
       stream: bloc.itemWithComments,
       builder: (context, AsyncSnapshot<Map<int, Future<ItemModel?>>> snapshot) {
         if (!snapshot.hasData) {
-          return const Text('Loading');
+          return const LoadingContainer();
         }
 
         final itemFuture = snapshot.data![itemId];
@@ -34,7 +35,7 @@ class NewsDetail extends StatelessWidget {
           future: itemFuture,
           builder: (context, AsyncSnapshot<ItemModel?> itemSnapshot) {
             if (!itemSnapshot.hasData) {
-              return const Text('Loading');
+              return const LoadingContainer();
             }
 
             return buildList(itemSnapshot.data, snapshot.data);
